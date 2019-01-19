@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class AnswerButton extends StatelessWidget {
   final bool answer;
+  final VoidCallback _onTap;
   
-  AnswerButton(this.answer);
+  AnswerButton(this.answer, this._onTap);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class AnswerButton extends StatelessWidget {
       child:new Material(
         color: answer==true ? Colors.greenAccent : Colors.redAccent,
         child: new InkWell(
-          onTap: ()=> answer==true ? print("You answered true") : print("You answered false"),
+          onTap: ()=> _onTap(),
           child: new Center(
             child: new Container(
               decoration: new BoxDecoration(

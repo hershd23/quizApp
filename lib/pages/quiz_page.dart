@@ -12,18 +12,48 @@ class QuizPage extends StatefulWidget {
 }
 
 class QuizPageState extends State<QuizPage> {
+
+  Question currentQuestion;
+  Quiz quiz = new Quiz([
+    new Question("Brooklyn 99 is da best", true),
+    new Question("Pizza is healthy", false),
+    new Question("Android Studio sucks", true)
+  ]);
+
+  String questionText;
+  int questionNumber;
+  bool isCorrect;
+  bool overlayShouldBeVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    currentQuestion = quiz.nextQuestion;
+    questionText = currentQuestion.question;
+    questionNumber = quiz.questionNumber;
+  }
+
+  void handleAnswer(bool answer){
+    isCorrect = (currentQuestion.answer == answer);
+    quiz.answer(isCorrect);
+    this.setState(() {
+      overlayShouldBeVisible = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Stack(
+      fit: StackFit.expand,
       children: <Widget>[
         new Column(
           children: <Widget>[
-            new AnswerButton(true),
+            new AnswerButton(true, () => handleAnswer(true)),//truebutton
             new QuestionText("Pizza is nice", 1),
-            new AnswerButton(false)
+            new AnswerButton(false, () => handleAnswer(false))//false button
           ],
         ),
-        new CorrectWrongOverlay(true)
+        overlayShouldBeVisible == true ? new CorrectWrongOverlay(true) : new Container()
       ],
     );
   }
