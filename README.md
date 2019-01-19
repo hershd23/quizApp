@@ -1,6 +1,7 @@
 # quiz
 
 A new Flutter project.
+An app made following a tutorial on YouTube
 
 ## Getting Started
 
